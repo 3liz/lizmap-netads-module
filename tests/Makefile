@@ -31,9 +31,9 @@ main:
 			stop:  stop docker and remove containers
 			clean: reset containers and remove lizmap configuration
 
-			Note: Un fichier d'environment pour docker-compose
+			Note: Un fichier d'environment pour docker compose
 			est crée à chaque invocation de 'run'.
-			Cela permet d'utiliser les commandes 'docker-compose'
+			Cela permet d'utiliser les commandes 'docker compose'
 			sans passer par le Makefile
 	EOF
 
@@ -59,13 +59,13 @@ env: dirs
 		EOF
 
 run: stop
-	docker-compose up -d
+	docker compose up -d
 
 stop: env
-	docker-compose down || true
+	docker compose down || true
 
 clean: stop
-	docker-compose down -v
+	docker compose down -v
 	rm -rf $(LIZMAP_DIR)/www/*
 	rm -rf $(LIZMAP_DIR)/var/*
 	rm -f .env
