@@ -2,4 +2,8 @@
    <listener name="netads">
        <event name="getMapAdditions" />
    </listener>
+
+  <listener name="adminnetads">
+      <event name="masteradminGetMenuContent" />
+  </listener>
 </events>

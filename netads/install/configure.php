@@ -24,6 +24,14 @@ class netadsModuleConfigurator extends \Jelix\Installer\Module\Configurator {
     public function declareUrls(EntryPointUrlModifier $registerOnEntryPoint)
     {
 
+        $registerOnEntryPoint->havingName(
+            'admin',
+            array(
+                new MapInclude('adminurls.xml')
+            )
+        )
+        ;
+
     }
 
     function configure(\Jelix\Installer\Module\API\ConfigurationHelpers $helpers)
