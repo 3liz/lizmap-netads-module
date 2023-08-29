@@ -61,6 +61,7 @@ env: dirs
 
 run: stop install-plugins
 	docker compose up -d
+	@echo "Launching Lizmap on http://localhost:$(LIZMAP_PORT)"
 
 stop: env
 	docker compose down || true
@@ -95,7 +96,7 @@ install-plugins: dirs
 		    qgis-plugin-manager install 'Lizmap server'"
 
 shell:
-	docker compose exec -u ${LIZMAP_USER_ID} lizmap /bin/sh -l 
+	docker compose exec -u ${LIZMAP_USER_ID} lizmap /bin/sh -l
 
 shell-root:
 	docker compose exec lizmap /bin/sh -l
