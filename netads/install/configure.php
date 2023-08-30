@@ -21,31 +21,10 @@ class netadsModuleConfigurator extends \Jelix\Installer\Module\Configurator {
         return array();
     }
 
-
     public function declareUrls(EntryPointUrlModifier $registerOnEntryPoint)
     {
 
-        $registerOnEntryPoint->havingName(
-            'netads',
-            array(
-                new MapInclude('urls.xml')
-            )
-        )
-        ;
     }
-
-    public function getEntryPointsToCreate()
-    {
-        return array(
-            new \Jelix\Installer\Module\EntryPointToInstall(
-                'netads.php',
-                'netads/config.ini.php',
-                'netads.php',
-                'config/config.ini.php'
-            )
-        );
-    }
-
 
     function configure(\Jelix\Installer\Module\API\ConfigurationHelpers $helpers)
     {
