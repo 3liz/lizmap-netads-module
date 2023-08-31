@@ -1,0 +1,136 @@
+<?php
+
+class dossiersCtrl extends jController {
+
+    public function index() {
+        $repo = $this->param('repository');
+        $projectName = $this->param('project');
+        $parcelleFID = $this->param('parcelle_fid');
+
+        $resp = $this->getResponse('htmlfragment');
+        $missingParams = $this->checkMissingParams(array('parcelle_fid'));
+        if (!is_null($missingParams)) {
+            $resp->setHttpStatus('400', 'missing ' . implode(',', $missingParams) . ' param in request');
+            return $resp;
+        }
+        $testNetADSProject = \netADS\Util::projectIsNetADS($repo, $projectName);
+        if ($testNetADSProject != \netADS\Util::PROJECT_OK) {
+            if ($testNetADSProject == \netADS\Util::ERR_CODE_PROJECT_VARIABLE) {
+                $message = 'Missing projet variable';
+            } else {
+                $message = 'Project name must be "netads"';
+            }
+            $resp->setHttpStatus('500', $message);
+            return $resp;
+        }
+
+        $sqlParcelle = 'SELECT id_parcelles, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, ident
+        , ccodep||ccodir||ccocom as code_commune, ccopre||ccosec as code_section
+        FROM netads.parcelles
+        WHERE id_parcelles = :idparcelle ';
+        $cnx = \jDb::getConnection('netads');
+
+        try {
+            $resultset = $cnx->prepare($sqlParcelle);
+            $resultset->bindValue('idparcelle', intval($parcelleFID));
+            $resultset->execute();
+            $data = $resultset->fetchAssociative();
+        } catch (\Exception $e) {
+            jlog::log($e->getMessage());
+            $resp->setHttpStatus('500', 'Error while query');
+            return $resp;
+        }
+
+        // curl sur le service externe
+        $netADSClientId = $this->getNetADSClientID();
+        $apiClient = new \netADS\NetADSAPIClient($netADSClientId);
+        $dossiers = $apiClient->getDossiers($data['code_commune'], $data['code_section'], $data['dnupla']);
+
+        $modeDownload = \jAcl2::check('netads.nadfile.download.ok');
+
+        $dossierFields = array('idmodule',
+            'idcommune',
+            'iddossier',
+            'nature',
+            'naturecomplement',
+            'modtft_lettre',
+            'reforme',
+            'datedepot',
+            'datedecision',
+            'naturedecision',
+            'libelledecision',
+            'instructeur',
+            'instructeur_initiales',
+            'tiers_nom',
+            'terrain_numvoie',
+            'terrain_lettrevoie',
+            'terrain_adresse1',
+            'terrain_adresse2',
+            'datedoc',
+            'datedaact');
+        $resp->tpl->assign('fields', $dossierFields);
+        $resp->tpl->assign('dossiers', $dossiers);
+        $resp->tpl->assign('modeDownload',$modeDownload);
+        $resp->tpl->assign('repository', $repo);
+        $resp->tpl->assign('project',$projectName);
+        $resp->tpl->assign('netADSClientId',$netADSClientId);
+        $resp->tpl->assign('viewURL', $apiClient->getViewURL());
+        $resp->tplname = 'netads~dossier';
+
+        return $resp;
+    }
+
+    public function nad() {
+        $repo = $this->param('repository');
+        $projectName = $this->param('project');
+        $idDossier = $this->param('id_dossier');
+        $missingParams = $this->checkMissingParams(array('id_dossier'));
+        if (!is_null($missingParams)) {
+            $resp = $this->getResponse('text');
+            $resp->setHttpStatus('400', 'missing ' . implode(',', $missingParams) . ' param in request');
+            return $resp;
+        }
+
+        $testNetADSProject = netADS\Util::projectIsNetADS($repo, $projectName);
+        if ($testNetADSProject != \netADS\Util::PROJECT_OK) {
+            if ($testNetADSProject == \netADS\Util::ERR_CODE_PROJECT_VARIABLE) {
+                $message = 'Missing projet variable';
+            } else {
+                $message = 'Project name must be "netads"';
+            }
+            $resp = $this->getResponse('text');
+            $resp->setHttpStatus('500', $message);
+            return $resp;
+        }
+        $resp = $this->getResponse('binary');
+        $content = "D\nADS\n" . $idDossier;
+
+        $resp->outputFileName = 'dossier.nad';
+        $resp->mimeType = 'text/simple';
+        $resp->content = $content;
+        $resp->doDownload = true;
+        return $resp;
+    }
+
+    protected function getNetADSClientID() {
+        $repo = $this->param('repository');
+        $projectName = $this->param('project');
+
+        $project = \lizmap::getProject($repo . '~' . $projectName);
+        $customProjectVariables = $project->getCustomProjectVariables();
+
+        return $customProjectVariables['netads_idclient'];
+    }
+
+    protected function checkMissingParams($additionnalParams = array()) {
+        $defaultParams = array('repository', 'project');
+        $allParams = array_merge($defaultParams, $additionnalParams);
+        $missingParams = null;
+        foreach ($allParams as $paramName) {
+            if (is_null($this->param($paramName))) {
+                $missingParams[] = $paramName;
+            }
+        }
+        return $missingParams;
+    }
+}
