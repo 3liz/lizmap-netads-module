@@ -25,7 +25,7 @@ lizMap.events.on({
             sentFormData.append('GEOMETRYNAME', 'extent');
 
             // Transformation du paramètre d'URL parcelles en EXP_FILTER
-            sentFormData.append('EXP_FILTER', `"IDU" = ${params.IDU}`);
+            sentFormData.append('EXP_FILTER', `"ident" = ${params.IDU}`);
 
             fetch(`${lizUrls.wms}?repository=${lizUrls.params.repository}&project=${lizUrls.params.project}`, {
                 body: sentFormData,
