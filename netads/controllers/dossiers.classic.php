@@ -83,8 +83,8 @@ class dossiersCtrl extends jController {
     public function nad() {
         $repo = $this->param('repository');
         $projectName = $this->param('project');
-        $idDossier = $this->param('id_dossier');
-        $missingParams = $this->checkMissingParams(array('id_dossier'));
+        $idDossier = $this->param('iddossier');
+        $missingParams = $this->checkMissingParams(array('iddossier'));
         if (!is_null($missingParams)) {
             $resp = $this->getResponse('text');
             $resp->setHttpStatus('400', 'missing ' . implode(',', $missingParams) . ' param in request');
