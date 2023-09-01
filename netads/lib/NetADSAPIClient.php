@@ -45,7 +45,7 @@ class NetADSAPIClient {
 
         $xmlObj = \Lizmap\App\XmlTools::xmlFromString($data);
         if (!is_object($xmlObj)) {
-            \jLog::log('unable to query netADS API (.' . $this->searchURL . ')');
+            \jLog::log('unable to query netADS API (.' . $this->searchURL . ')', 'error');
 
             return null;
         }
