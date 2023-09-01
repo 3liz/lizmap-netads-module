@@ -1,8 +1,7 @@
+const NOM_COUCHE_PARCELLES = 'parcelles';
+
 lizMap.events.on({
     uicreated: () => {
-
-        const NOM_COUCHE_PARCELLES = 'parcelles';
-
         const urlSearchParams = new URLSearchParams(window.location.search);
         const params = Object.fromEntries(urlSearchParams.entries());
 
@@ -49,5 +48,30 @@ lizMap.events.on({
                 }
             });
         }
+    },
+    lizmappopupdisplayed: () => {
+
+        const layerFidNodes = document.querySelectorAll(`input[value^="${NOM_COUCHE_PARCELLES}_"].lizmap-popup-layer-feature-id`);
+
+        if (!layerFidNodes) {
+            return;
+        }
+
+        const promises = [];
+        for (const layerFidNode of layerFidNodes) {
+            const featureId = layerFidNode.value.split('.')[1];
+
+            promises.push(fetch(`${lizUrls.basepath}index.php/netads/dossiers?repository=${lizUrls.params.repository}&project=${lizUrls.params.project}&parcelle_fid=${featureId}`).then(response => {
+                return response.text();
+            }));
+        }
+
+        Promise.all(promises).then(responses => {
+            let index = 0;
+            for(const response of responses){
+                layerFidNodes[index].parentElement.insertAdjacentHTML('beforeend', response);
+                index++;
+            }
+        });
     }
 });
