@@ -36,7 +36,7 @@ class dossiersCtrl extends jController {
             $resultset->execute();
             $data = $resultset->fetchAssociative();
         } catch (\Exception $e) {
-            jlog::log($e->getMessage());
+            jlog::log($e->getMessage(), 'error');
             $resp->setHttpStatus('500', 'Error while query');
             return $resp;
         }
