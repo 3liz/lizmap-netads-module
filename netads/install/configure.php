@@ -31,7 +31,13 @@ class netadsModuleConfigurator extends \Jelix\Installer\Module\Configurator {
             )
         )
         ;
-
+        $registerOnEntryPoint->havingName(
+            'index',
+            array(
+                new MapInclude('urls.xml')
+            )
+        )
+        ;
     }
 
     function configure(\Jelix\Installer\Module\API\ConfigurationHelpers $helpers)
