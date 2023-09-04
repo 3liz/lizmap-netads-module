@@ -1,6 +1,11 @@
 <?php
 
 class adminCtrl extends jController {
+
+    public $pluginParams = array(
+        '*' => array('jacl2.right' => 'netads.admin.access'),
+    );
+
     private $iniFile;
 
     public function __construct($request) {

@@ -2,6 +2,10 @@
 
 class dossiersCtrl extends jController {
 
+    public $pluginParams = array(
+        'nad' => array('jacl2.right' => 'netads.nadfile.download.ok'),
+    );
+
     public function index() {
         $repo = $this->param('repository');
         $projectName = $this->param('project');
