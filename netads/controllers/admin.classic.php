@@ -44,6 +44,10 @@ class adminCtrl extends jController {
         $resp = $this->getResponse('html');
 
         $form = jForms::get('netads~netadsadmin');
+        if ( is_null($form) ) {
+            // redirect to default page
+            return $this->redirect('netads~admin:prepare');
+        }
         $tpl = new jTpl();
         $tpl->assign('form', $form);
 
@@ -55,6 +59,11 @@ class adminCtrl extends jController {
 
     public function save() {
         $form = jForms::fill('netads~netadsadmin');
+        if ( is_null($form) ) {
+            // redirect to default page
+            return $this->redirect('netads~admin:prepare');
+        }
+
         if (!$form->check()) {
             return $this->redirect('netads~admin:edit');
         }
