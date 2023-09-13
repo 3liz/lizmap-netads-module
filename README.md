@@ -28,7 +28,7 @@ NB : tous les chemins ci-dessous sont relatifs au dossier de Lizmap Web Client.
 ### Copie des fichiers manuelle (sans composer)
 
 
- * Téléchargez l'archive sur la page des [versions dans Github](https://github.com/3liz/lizmap-netads-module/releases).
+ * Téléchargez l'archive sur la page des [versions dans GitHub](https://github.com/3liz/lizmap-netads-module/releases).
 
  * Extrayez les fichiers de l'archive et copier le répertoire `netads` dans `lizmap/lizmap-modules/`.
 
