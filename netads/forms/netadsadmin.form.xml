@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://jelix.org/ns/forms/1.1">
   <input ref='client_id'>
-    <label>Identifiant client netADS par défaut</label>
+    <label>Identifiant client NetADS par défaut</label>
   </input>
 
   <input ref="search_url">
-    <label>URL de recherche de dossiers netADS</label>
+    <label>URL de recherche de dossiers NetADS</label>
   </input>
 
   <input ref="login">
-    <label>Login netADS</label>
+    <label>Utilisateur NetADS</label>
   </input>
 
   <input ref="password">
-    <label>Mot de passe crypté</label>
+    <label>Mot de passe chiffré</label>
   </input>
 
   <input ref="view_url">
-    <label>URL de consultation de dossiers netADS/label</label>
+    <label>URL de consultation de dossiers NetADS/label</label>
   </input>
 
   <submit ref='submit'>
