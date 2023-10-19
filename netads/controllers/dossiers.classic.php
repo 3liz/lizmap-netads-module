@@ -120,10 +120,7 @@ class dossiersCtrl extends jController {
         $repo = $this->param('repository');
         $projectName = $this->param('project');
 
-        $project = \lizmap::getProject($repo . '~' . $projectName);
-        $customProjectVariables = $project->getCustomProjectVariables();
-
-        return $customProjectVariables['netads_idclient'];
+        return netADS\Util::projectIdClientNetADS($repo, $projectName);
     }
 
     protected function checkMissingParams($additionnalParams = array()) {

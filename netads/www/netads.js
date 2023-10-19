@@ -7,8 +7,18 @@ lizMap.events.on({
 
         if (params && params.IDU) {
 
-            if (params.IDU.length !== 12) {
-                console.log('Le paramètre IDU doit contenir 12 caractères !');
+            let parcelleIDU = params.IDU;
+            if (parcelleIDU.length < 12) {
+                console.log('Le paramètre IDU doit contenir 12 ou 15 caractères !');
+                return;
+            }
+
+            if (parcelleIDU.length == 12) {
+                parcelleIDU = netAdsConfig.prefixParcelle + parcelleIDU;
+            }
+
+            if (parcelleIDU.length != 15) {
+                console.log('Le paramètre IDU doit contenir 12 ou 15 caractères !');
                 return;
             }
 
@@ -24,7 +34,7 @@ lizMap.events.on({
             sentFormData.append('GEOMETRYNAME', 'extent');
 
             // Transformation du paramètre d'URL parcelles en EXP_FILTER
-            sentFormData.append('EXP_FILTER', `"ident" = ${params.IDU}`);
+            sentFormData.append('EXP_FILTER', `"ident" = '${parcelleIDU}'`);
 
             fetch(`${lizUrls.wms}?repository=${lizUrls.params.repository}&project=${lizUrls.params.project}`, {
                 body: sentFormData,
