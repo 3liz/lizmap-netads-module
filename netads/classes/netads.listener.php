@@ -18,8 +18,10 @@ class netadsListener extends jEventListener {
         $projectNetADSCheck = \netADS\Util::projectIsNetADS($repository, $project);
         switch ($projectNetADSCheck) {
             case \netADS\Util::PROJECT_OK:
+                $prefixParcelle = \netADS\Util::projectPrefixParcelleNetADS($repository, $project);
                 $jscode = array('const netAdsConfig  = {"layerParcelle" : "' . $layerParcelle . '" , ' .
-                    ' "parcelleQueryUrl":"' . jUrl::get('netads~dossiers:index') . '"};');
+                    ' "parcelleQueryUrl":"' . jUrl::get('netads~dossiers:index') . '" , ' .
+                    ' "prefixParcelle":"' . $prefixParcelle . '"};');
 
                 break;
             case \netADS\Util::ERR_CODE_PROJECT_NAME:

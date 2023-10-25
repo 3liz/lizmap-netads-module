@@ -15,7 +15,7 @@ class impactsCtrl extends jController {
         $testNetADSProject = \netADS\Util::projectIsNetADS($repo, $projectName);
         if ($testNetADSProject != \netADS\Util::PROJECT_OK) {
             if ($testNetADSProject == \netADS\Util::ERR_CODE_PROJECT_VARIABLE) {
-                $message = 'Missing projet variable';
+                $message = 'Missing project variable';
             } else {
                 $message = 'Project name must be "netads"';
             }
@@ -23,8 +23,18 @@ class impactsCtrl extends jController {
             return $resp;
         }
 
-        if (strlen($parcelleIDU) != 10 ) {
-            $resp->setHttpStatus('500', 'IDU must be 10 characters long');
+        if (strlen($parcelleIDU) < 12 ) {
+            $resp->setHttpStatus('500', 'IDU must be 12 or 15 characters long');
+            return $resp;
+        }
+
+        if (strlen($parcelleIDU) == 12 ) {
+            $prefixParcelle = \netADS\Util::projectPrefixParcelleNetADS($repository, $project);
+            $parcelleIDU = $prefixParcelle . $parcelleIDU;
+        }
+
+        if (strlen($parcelleIDU) != 15 ) {
+            $resp->setHttpStatus('500', 'IDU must be 12 or 15 characters long');
             return $resp;
         }
 
@@ -36,7 +46,7 @@ class impactsCtrl extends jController {
 
         try {
             $resultset = $cnx->prepare($sqlParcelle);
-            $resultset->bindValue('ident', 1);//$parcelleIDU);
+            $resultset->bindValue('ident', $parcelleIDU);
             $resultset->execute();
             $data = $resultset->fetchAssociative();
         } catch (\Exception $e) {

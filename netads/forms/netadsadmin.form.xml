@@ -2,22 +2,34 @@
 <form xmlns="http://jelix.org/ns/forms/1.1">
   <input ref='client_id'>
     <label>Identifiant client NetADS par défaut</label>
+    <help>Code client attribué à la collectivité</help>
   </input>
 
-  <input ref="search_url">
+  <input ref='prefix_parcelle' minlength="3" maxlength="3">
+    <label>Préfix parcellaire par défaut</label>
+    <help>Code départemental (2 caractères) et code de direction (1 caractère).
+    Les identifiants de parcelles NetADS sont de 12 caractères alors que les identifiants de aprcelles du cadastre sont de 15 caractères.
+    La différence correspond au code départemental et au code de direction.</help>
+  </input>
+
+  <input ref="view_url" type="url">
+    <label>URL de consultation de dossiers NetADS/label</label>
+    <help>Permet la consultation d’un dossier dans « NetADS web » depuis un appel effectué sur la référence d’un dossier présent sur la fiche parcellaire du SIG</help>
+  </input>
+
+  <input ref="search_url" type="url">
     <label>URL de recherche de dossiers NetADS</label>
+    <help>Permet d'obtenir la liste des dossiers déposés sur une parcelle donnée depuis un appel effectué sur la fiche parcellaire du SIG</help>
   </input>
 
   <input ref="login">
-    <label>Utilisateur NetADS</label>
+    <label>Compte dédié au SIG présent dans NetADS</label>
+    <help>Compte permettant d'obtenir la liste des dossiers déposés sur une parcelle donnée depuis un appel effectué sur la fiche parcellaire du SIG</help>
   </input>
 
   <input ref="password">
-    <label>Mot de passe chiffré</label>
-  </input>
-
-  <input ref="view_url">
-    <label>URL de consultation de dossiers NetADS/label</label>
+    <label>Mot de passe crypté associé à ce compte dédié au SIG</label>
+    <help>Mot de passe chiffré du compte permettant d'obtenir la liste des dossiers déposés sur une parcelle donnée depuis un appel effectué sur la fiche parcellaire du SIG</help>
   </input>
 
   <submit ref='submit'>
