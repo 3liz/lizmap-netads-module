@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.1 - 2023-10-26
+
 ### Added
 
 * Quelques petites corrections typographiques

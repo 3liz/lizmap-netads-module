@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module xmlns="http://jelix.org/ns/module/1.0">
-    <info id="netads3liz.com" name="netads" createdate="2021-10-20">
-        <version date="2023-05-30">1.0.0</version>
+    <info id="netads3liz.com" name="netads" createdate="2023-05-30">
+        <version date="2023-10-26">1.0.1</version>
         <label lang="en_US">netads</label>
         <description lang="en_US" />
         <license URL="">All rights reserved</license>
