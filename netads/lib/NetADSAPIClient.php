@@ -21,31 +21,43 @@ class NetADSAPIClient {
     }
 
     public function getDossiers(string $commune, string $section, string $numero) {
-        $requestParam = array('id_client' => $this->netADSclientID,
+        $requestParam = array(
+            'idclient' => $this->netADSclientID,
             'user_login' => $this->login,
             'user_pass' => $this->encryptedPassword,
             'idrecherche' => '3',
             'idmodule' => 'ADS',
             'communes' => $commune,
-            'section' => $section,
+            'section' => substr($section, -2),
             'numero' => $numero
 
         );
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_URL, $this->searchURL);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $requestParam);
 
-        $data = curl_exec($ch);
-        curl_close($ch);
+        $options = array(
+            'method' => 'post',
+            'body' => http_build_query($requestParam),
+            'headers' => array(
+                'Content-type' => 'application/x-www-form-urlencoded',
+            ),
+        );
+
+        list($data, $mime, $code) = \Lizmap\Request\Proxy::getRemoteData($this->searchURL, $options);
+
+        if (floor($code / 100) >= 4) {
+            \jLog::log('unable to query netADS API (' . $this->searchURL . ') HTTP code '.$code, 'error');
+
+            return null;
+        }
+
+        if ($mime != 'application/xml') {
+            \jLog::log('unable to query netADS API (' . $this->searchURL . ') mime-type '.$mime, 'error');
+
+            return null;
+        }
 
         $xmlObj = \Lizmap\App\XmlTools::xmlFromString($data);
         if (!is_object($xmlObj)) {
-            \jLog::log('unable to query netADS API (.' . $this->searchURL . ')', 'error');
+            \jLog::log('unable to query netADS API (' . $this->searchURL . ')', 'error');
 
             return null;
         }
