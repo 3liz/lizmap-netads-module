@@ -6,6 +6,7 @@
 
 * Correction des paramètres d'obtention de la liste des dossiers
 * Utilisation de \Lizmap\Request\Proxy::getRemoteData à la place de curl
+* Ajout de tous les champs des dossiers
 
 ## 1.0.1 - 2023-10-26
 

@@ -58,6 +58,7 @@ class dossiersCtrl extends jController {
             'nature',
             'naturecomplement',
             'modtft_lettre',
+            'libellemodtft',
             'reforme',
             'datedepot',
             'datedecision',
@@ -70,8 +71,20 @@ class dossiersCtrl extends jController {
             'terrain_lettrevoie',
             'terrain_adresse1',
             'terrain_adresse2',
+            'terrain_adresse3',
+            'terrain_adresse4',
+            'terrain_boitepostale',
+            'terrain_cedex',
+            'terrain_codepostal',
+            'terrain_ville',
             'datedoc',
-            'datedaact');
+            'datedaact',
+            'mode',
+            'modedepot',
+            'mode_long',
+            'projet',
+            'lastEventDesc',
+        );
         $resp->tpl->assign('fields', $dossierFields);
         $resp->tpl->assign('dossiers', $dossiers);
         $resp->tpl->assign('modeDownload',$modeDownload);
