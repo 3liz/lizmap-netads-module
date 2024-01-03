@@ -1,6 +1,7 @@
 <events xmlns="http://jelix.org/ns/events/1.0">
    <listener name="netads">
        <event name="getMapAdditions" />
+       <event name="getRedirectKeyParams" />
    </listener>
 
   <listener name="adminnetads">

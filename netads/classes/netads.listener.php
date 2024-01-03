@@ -43,4 +43,18 @@ class netadsListener extends jEventListener {
             )
         );
     }
+
+    public function ongetRedirectKeyParams($event) {
+        $repository = $event->repository;
+        $project = $event->project;
+
+        $layerParcelle = 'parcelles';
+
+        $projectNetADSCheck = \netADS\Util::projectIsNetADS($repository, $project);
+        switch ($projectNetADSCheck) {
+            case \netADS\Util::PROJECT_OK:
+                $event->add('IDU');
+                break;
+        }
+    }
 }
