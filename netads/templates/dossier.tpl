@@ -28,3 +28,6 @@
         {/if}
     </div>
 {/foreach}
+{if count($dossiers) == 0}
+    <div>Dossier : aucun</div>
+{/if}
