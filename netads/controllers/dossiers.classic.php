@@ -32,7 +32,8 @@ class dossiersCtrl extends jController {
         , ccodep||ccodir||ccocom as code_commune, ccopre||ccosec as code_section
         FROM netads.parcelles
         WHERE id_parcelles = :idparcelle ';
-        $cnx = \jDb::getConnection('netads');
+
+        $cnx = \netADS\Util::getConnection($repo, $projectName);
 
         try {
             $resultset = $cnx->prepare($sqlParcelle);

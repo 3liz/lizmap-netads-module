@@ -55,4 +55,35 @@ class Util {
         $iniFile = new \Jelix\IniFile\IniModifier($file);
         return $iniFile->getValue('prefix_parcelle');
     }
+
+    public static function getConnection(string $repo, string $projectName) {
+        // Check project is a NetADS one
+        if (self::projectIsNetADS($repo, $projectName) != self::PROJECT_OK) {
+            return null;
+        }
+
+        // Get project
+        $project = \lizmap::getProject($repo . '~' . $projectName);
+        $layerParcelle = 'parcelles';
+
+        // Get parcelles layer
+        $layer = $project->findLayerByName($layerParcelle);
+        if (!$layer) {
+            return \jDb::getConnection('netads');
+        }
+
+        // Get parcelles QGIS layer
+        $layerId = $layer->id;
+        $qgisLayer = $project->getLayer($layerId);
+        if (!$qgisLayer) {
+            return \jDb::getConnection('netads');
+        }
+
+        // Get profile
+        $profile = $qgisLayer->getDatasourceProfile(34);
+        if (!$profile) {
+            return \jDb::getConnection('netads');
+        }
+        return \jDb::getConnection($profile);
+    }
 }

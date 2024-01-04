@@ -48,8 +48,6 @@ class netadsListener extends jEventListener {
         $repository = $event->repository;
         $project = $event->project;
 
-        $layerParcelle = 'parcelles';
-
         $projectNetADSCheck = \netADS\Util::projectIsNetADS($repository, $project);
         switch ($projectNetADSCheck) {
             case \netADS\Util::PROJECT_OK:

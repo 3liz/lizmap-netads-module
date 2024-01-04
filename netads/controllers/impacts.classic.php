@@ -29,7 +29,7 @@ class impactsCtrl extends jController {
         }
 
         if (strlen($parcelleIDU) == 12 ) {
-            $prefixParcelle = \netADS\Util::projectPrefixParcelleNetADS($repository, $project);
+            $prefixParcelle = \netADS\Util::projectPrefixParcelleNetADS($repo, $projectName);
             $parcelleIDU = $prefixParcelle . $parcelleIDU;
         }
 
@@ -42,7 +42,8 @@ class impactsCtrl extends jController {
         FROM netads.parcelles
         WHERE ident = :ident;
          ';
-        $cnx = \jDb::getConnection('netads');
+
+        $cnx = \netADS\Util::getConnection($repo, $projectName);
 
         try {
             $resultset = $cnx->prepare($sqlParcelle);
