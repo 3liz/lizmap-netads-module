@@ -42,7 +42,12 @@ class dossiersCtrl extends jController {
             $data = $resultset->fetchAssociative();
         } catch (\Exception $e) {
             jlog::log($e->getMessage(), 'error');
-            $resp->setHttpStatus('500', 'Error while query');
+            $resp->setHttpStatus('500', 'Error while querying parcelle');
+            return $resp;
+        }
+
+        if (is_null($data)) {
+            $resp->setHttpStatus('404', 'Parcelle not found');
             return $resp;
         }
 
