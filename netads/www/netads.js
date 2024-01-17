@@ -67,21 +67,53 @@ lizMap.events.on({
             return;
         }
 
-        const promises = [];
-        for (const layerFidNode of layerFidNodes) {
-            const featureId = layerFidNode.value.split('.')[1];
-
-            promises.push(fetch(`${lizUrls.basepath}index.php/netads/dossiers?repository=${lizUrls.params.repository}&project=${lizUrls.params.project}&parcelle_fid=${featureId}`).then(response => {
-                return response.text();
-            }));
+        function getPromiseDossier(layerFidNode) {
+            return new Promise(function(resolve, reject) {
+                const featureId = layerFidNode.value.split('.')[1];
+                fetch(`${lizUrls.basepath}index.php/netads/dossiers?repository=${lizUrls.params.repository}&project=${lizUrls.params.project}&parcelle_fid=${featureId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.status+': '+response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    layerFidNode.parentElement.insertAdjacentHTML('beforeend', text);
+                    resolve(featureId);
+                })
+                .catch(reason => { reject(reason); });
+            });
+        }
+        function getPromiseImpact(layerFidNode) {
+            return new Promise(function(resolve, reject) {
+                const featureId = layerFidNode.value.split('.')[1];
+                fetch(`${lizUrls.basepath}index.php/netads/impacts/info?repository=${lizUrls.params.repository}&project=${lizUrls.params.project}&parcelle_fid=${featureId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.status+': '+response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    layerFidNode.parentElement.insertAdjacentHTML('beforeend', text);
+                    resolve(featureId);
+                })
+                .catch(reason => { reject(reason); });
+            });
         }
 
-        Promise.all(promises).then(responses => {
-            let index = 0;
-            for(const response of responses){
-                layerFidNodes[index].parentElement.insertAdjacentHTML('beforeend', response);
-                index++;
-            }
+        const promises = [];
+        for (const layerFidNode of layerFidNodes) {
+            promises.push(getPromiseDossier(layerFidNode));
+            promises.push(getPromiseImpact(layerFidNode));
+        }
+
+        Promise.allSettled(promises).then((results) => {
+            results.forEach((result) => {
+                if (result.status === 'rejected') {
+                    console.log(result.reason);
+                }
+            });
         });
     }
 });

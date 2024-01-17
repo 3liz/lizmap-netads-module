@@ -4,4 +4,5 @@
     <url pathinfo="/dossiers"  action="dossiers:index"/>
     <url pathinfo="/dossiers/nad"  action="dossiers:nad"/>
     <url pathinfo="/impacts"  action="impacts:index"/>
+    <url pathinfo="/impacts/info"  action="impacts:info"/>
 </suburls>
