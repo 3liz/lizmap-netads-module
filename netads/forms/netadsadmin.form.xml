@@ -6,9 +6,9 @@
   </input>
 
   <input ref='prefix_parcelle' minlength="3" maxlength="3">
-    <label>Préfix parcellaire par défaut</label>
+    <label>Préfixe parcellaire par défaut</label>
     <help>Code départemental (2 caractères) et code de direction (1 caractère).
-    Les identifiants de parcelles NetADS sont de 12 caractères alors que les identifiants de aprcelles du cadastre sont de 15 caractères.
+    Les identifiants de parcelles NetADS sont de 12 caractères alors que les identifiants de parcelles du cadastre sont de 15 caractères.
     La différence correspond au code départemental et au code de direction.</help>
   </input>
 
