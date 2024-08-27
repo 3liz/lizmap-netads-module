@@ -1,5 +1,5 @@
 
-{if count($impacts) == 0}
+{if $impacts->rowCount() == 0}
 <div class="netads-impacts">Impact&nbsp;: aucun.</div>
 {else}
 <div class="netads-impacts">
