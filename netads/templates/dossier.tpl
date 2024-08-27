@@ -1,4 +1,4 @@
-{if count($dossiers) == 0}
+{if $dossiers == null || count($dossiers) == 0}
 <div class="netads-dossiers">Dossier&nbsp;: aucun.</div>
 {else}
 <div class="netads-dossiers">
