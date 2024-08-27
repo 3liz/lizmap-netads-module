@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 1.0.3 - 2024-08-27
+
+### Added
+
+* Données de tests
+* Support Lizmap Web Client 3.8
+
+### Fixed
+
+* Déclaration du paramètre IDU pour redirection après authentification
+* Mise à jour de la template HTML de dossier
+* Mise à jour de la template HTML de impacts
+
 ## 1.0.2 - 2023-11-02
 
 ### Fixed
