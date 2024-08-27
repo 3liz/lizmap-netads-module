@@ -10,9 +10,9 @@ LIZMAP_USER_GID:=$(shell id -g)
 LIZMAP_USER:=userphp
 LIZMAP_GROUP:=groupphp
 
-LIZMAP_VERSION_TAG:=3.8.0-rc.4
+LIZMAP_VERSION_TAG:=3.7
 QGIS_VERSION_TAG:=3.34
-POSTGIS_VERSION_TAG:=14-3
+POSTGIS_VERSION_TAG:=15-3
 
 QGIS_MAP_WORKERS:=1
 
@@ -95,13 +95,33 @@ install-plugins: dirs
 		    qgis-plugin-manager update; \
 		    qgis-plugin-manager install 'Lizmap server'"
 
+import-data:
+	export PGPASSWORD=lizmap1234!; psql -h localhost -U lizmap -d lizmap -p 9033 -f sql/test_data.sql
+
+import-lizmap-acl:
+	@echo "Set repositories and users rights if needed"
+	@echo "Set view project"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c 'php lizmap/console.php acl2:add __anonymous "lizmap.repositories.view" netads'
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c 'php lizmap/console.php acl2:add users "lizmap.repositories.view" netads'
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c 'php lizmap/console.php acl2:add admins "lizmap.repositories.view" netads'
+	@echo "Display WMS links"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c 'php lizmap/console.php acl2:add users "lizmap.tools.displayGetCapabilitiesLinks" netads'
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c 'php lizmap/console.php acl2:add admins "lizmap.tools.displayGetCapabilitiesLinks" netads'
+	@echo "Edition"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c 'php lizmap/console.php acl2:add users "lizmap.tools.edition.use" netads'
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c 'php lizmap/console.php acl2:add admins "lizmap.tools.edition.use" netads'
+	@echo "Export layers"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c 'php lizmap/console.php acl2:add __anonymous "lizmap.tools.layer.export" netads'
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c 'php lizmap/console.php acl2:add users "lizmap.tools.layer.export" netads'
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c 'php lizmap/console.php acl2:add admins "lizmap.tools.layer.export" netads'
+
 shell:
 	docker compose exec -u ${LIZMAP_USER_ID} lizmap /bin/sh -l
 
 shell-root:
 	docker compose exec lizmap /bin/sh -l
 
-setup-module:
+install-module:
 	docker compose exec  lizmap chown ${LIZMAP_USER_ID}:${LIZMAP_USER_GID} /srv/projects/
 	docker compose exec -u ${LIZMAP_USER_ID} lizmap php /www/lizmap/install/configurator.php -v netads
 	docker compose exec -u ${LIZMAP_USER_ID} lizmap php /www/lizmap/install/installer.php -v
