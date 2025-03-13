@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module xmlns="http://jelix.org/ns/module/1.0">
     <info id="netads3liz.com" name="netads" createdate="2023-05-30">
-        <version date="2024-08-27">1.0.3</version>
+        <version date="2025-03-13">1.0.4</version>
         <label lang="en_US">netads</label>
         <description lang="en_US" />
         <license URL="">All rights reserved</license>
@@ -10,7 +10,7 @@
         <homepageURL>https://3liz.com</homepageURL>
     </info>
     <dependencies>
-        <module name="lizmap" minversion="3.6.0" maxversion="3.8.*"/>
+        <module name="lizmap" minversion="3.6.0" maxversion="3.9.*"/>
     </dependencies>
       <autoload>
         <namespacePathMap name="netADS" dir="lib"/>

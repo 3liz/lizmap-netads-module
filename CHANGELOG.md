@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 1.0.4 - 2025-03-13
+
+### Added
+
+* Support Lizmap Web Client 3.9
+
+### Fixed
+
+* Envoie du code JS seulement si le projet `netads` est bien configuré
+
 ## 1.0.3 - 2024-08-27
 
 ### Added
