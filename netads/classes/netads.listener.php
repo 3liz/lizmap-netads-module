@@ -23,25 +23,29 @@ class netadsListener extends jEventListener {
                     ' "parcelleQueryUrl":"' . jUrl::get('netads~dossiers:index') . '" , ' .
                     ' "prefixParcelle":"' . $prefixParcelle . '"};');
 
-                break;
-            case \netADS\Util::ERR_CODE_PROJECT_NAME:
-                $jscode = array('console.warn(`Le projet doit se nommer "netads".`);');
+                $js = array(jUrl::get('jelix~www:getfile', array('targetmodule' => 'netads', 'file' => 'netads.js')));
 
+                $event->add(
+                    array(
+                        'js' => $js,
+                        'jscode' => $jscode,
+                    )
+                );
                 break;
+
             case \netADS\Util::ERR_CODE_PROJECT_VARIABLE:
-                $jscode = array('console.warn(`La variable "netads_idclient" doit être définie dans votre projet QGIS.`);');
+                $jscode = array('
+                    console.warn(`Ce projet "netads" n\'est pas configuré correctement.
+                    La variable "netads_idclient" doit être définie dans votre projet QGIS.`);
+                ');
 
+                $event->add(
+                    array(
+                        'jscode' => $jscode,
+                    )
+                );
                 break;
         }
-
-        $js = array(jUrl::get('jelix~www:getfile', array('targetmodule' => 'netads', 'file' => 'netads.js')));
-
-        $event->add(
-            array(
-                'js' => $js,
-                'jscode' => $jscode,
-            )
-        );
     }
 
     public function ongetRedirectKeyParams($event) {
