@@ -54,8 +54,14 @@ class dossiersCtrl extends jController {
         // curl sur le service externe
         $netADSClientId = $this->getNetADSClientID();
         $apiClient = new \netADS\NetADSAPIClient($netADSClientId);
-        $dossiers = $apiClient->getDossiers($data['code_commune'], $data['code_section'], $data['dnupla']);
+        try {
+            $dossiers = $apiClient->getDossiers($data['code_commune'], $data['code_section'], $data['dnupla']);
+        } catch (DomainException $e) {
+            $resp->tplname = 'netads~dossier.error';
+            $resp->tpl->assign('message', $e->getMessage());
 
+            return $resp;
+        }
         $modeDownload = \jAcl2::check('netads.nadfile.download.ok');
 
         $dossierFields = array('idmodule',
