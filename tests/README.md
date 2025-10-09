@@ -57,3 +57,18 @@ instead of the other credentials (host, port, database name, user and password).
 ```bash
 psql service=lizmap-netads
 ```
+## Tests manuels simples (vérification compatibilité Lizmap)
+
+Le js chargé par le module dans lizmap est testable :
+
+ - http://localhost:9090/index.php/view/map?repository=netads&project=netads&parcelle=&IDU=800016000LZ0018 : doit centrer la carte sur une parcelle
+
+- http://localhost:9090/index.php/view/map?repository=netads&project=netads&parcelle=&IDU=800016000LZabcd : affiche un message "Aucune parcelle trouvée"
+
+- le click sur une parcelle doit afficher dans la popup , les informations de la parcelle, une liste d'impacts
+ et un message "
+    ````
+    Erreur lors de l'interrogation de l'API : "netADS API call error"
+    Consulter le journal d'erreurs pour plus d'information.
+    `````
+    Le fichier de log `lizmap-admin.log` doit contenir plus de détail
