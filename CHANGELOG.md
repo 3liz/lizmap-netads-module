@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 1.0.5 - 2025-10-14
+
+### Added
+
+* Correction de la requête qui construit les paramètres transmis à l'API REST
+* Amélioration de la détection des retours de l'API REST (code erreur, ...)
+* Description des test manuels
+
 ## 1.0.4 - 2025-03-13
 
 ### Added
