@@ -30,7 +30,7 @@ class NetADSAPIClient {
             'idrecherche' => '3',
             'idmodule' => 'ADS',
             'communes' => $commune,
-            'section' => substr($section, -2),
+            'section' => $section,
             'numero' => $numero
 
         );
