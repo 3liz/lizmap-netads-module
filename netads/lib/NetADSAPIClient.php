@@ -1,6 +1,8 @@
 <?php
 namespace netADS;
 
+use DomainException;
+
 class NetADSAPIClient {
     private $netADSclientID;
     private $login;
@@ -28,7 +30,7 @@ class NetADSAPIClient {
             'idrecherche' => '3',
             'idmodule' => 'ADS',
             'communes' => $commune,
-            'section' => substr($section, -2),
+            'section' => $section,
             'numero' => $numero
 
         );
@@ -46,20 +48,30 @@ class NetADSAPIClient {
         if (floor($code / 100) >= 4) {
             \jLog::log('unable to query netADS API (' . $this->searchURL . ') HTTP code '.$code, 'error');
 
-            return null;
+            throw new DomainException('netADS API call error');
         }
 
         if ($mime != 'application/xml') {
             \jLog::log('unable to query netADS API (' . $this->searchURL . ') mime-type '.$mime, 'error');
 
-            return null;
+            throw new DomainException('netADS API invalid mime tye');
         }
 
         $xmlObj = \Lizmap\App\XmlTools::xmlFromString($data);
         if (!is_object($xmlObj)) {
             \jLog::log('unable to query netADS API (' . $this->searchURL . ')', 'error');
 
-            return null;
+            throw new DomainException('netADS API invalid XML');
+        }
+
+        $returnTag = $xmlObj->xpath('//retour')[0];
+        if ((string)$returnTag->children()->succes != 'O') {
+            // error : retrieving message
+            $message = (string)$returnTag->children()->message;
+            $description = (string)$returnTag->children()->description;
+            \jLog::log('netADS API return error : '.$description, 'lizmapadmin');
+
+            throw new DomainException($message);
         }
 
         $data = $xmlObj->xpath('//dossier');

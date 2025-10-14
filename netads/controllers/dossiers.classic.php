@@ -29,7 +29,7 @@ class dossiersCtrl extends jController {
         }
 
         $sqlParcelle = 'SELECT id_parcelles, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, ident
-        , ccodep||ccodir||ccocom as code_commune, ccopre||ccosec as code_section
+        , ccodep||ccodir||ccocom as code_commune, ccopre||trim(ccosec) as code_section
         FROM netads.parcelles
         WHERE id_parcelles = :idparcelle ';
 
@@ -54,8 +54,14 @@ class dossiersCtrl extends jController {
         // curl sur le service externe
         $netADSClientId = $this->getNetADSClientID();
         $apiClient = new \netADS\NetADSAPIClient($netADSClientId);
-        $dossiers = $apiClient->getDossiers($data['code_commune'], $data['code_section'], $data['dnupla']);
+        try {
+            $dossiers = $apiClient->getDossiers($data['code_commune'], $data['code_section'], $data['dnupla']);
+        } catch (DomainException $e) {
+            $resp->tplname = 'netads~dossier.error';
+            $resp->tpl->assign('message', $e->getMessage());
 
+            return $resp;
+        }
         $modeDownload = \jAcl2::check('netads.nadfile.download.ok');
 
         $dossierFields = array('idmodule',

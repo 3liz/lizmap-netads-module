@@ -595,29 +595,29 @@ COPY netads.impacts (id_impacts, type, code, sous_code, etiquette, libelle, desc
 30	ZONAGE	U			Uec	Secteur urbain économique
 31	ZONAGE	U			Ub	Secteur urbain des tissus anciens des pôles-relais et des communes rurales
 32	ZONAGE	AUc			1AUec	Zone à urbaniser à vocation économique
-33	PRESCRIPTION	02	00		PPR inondation et ruissellement des cantons de Chaulnes et de Bray-sur-Somme : Zone de type 3
-34	PRESCRIPTION	07	00		Patrimoine naturel remarquable surfacique à protéger au titre de l'article L151-23 du Code de l'Urbanisme (boisement, parc ...)
-35	PRESCRIPTION	02	00		Secteur soumis à un risque d'inondation (hors PPRI) au titre de l'article R151-31 du Code de l'Urbanisme
-36	PRESCRIPTION	18	00		Secteur couvert par une Orientation d'Aménagement et de Programmation de densification au titre de l'article R151-6 du Code de l'Urbanisme
-37	PRESCRIPTION	02	00		PPRI de Mesnil-Martinsart : Zone de type 1
-38	PRESCRIPTION	18	00		Secteur couvert par une Orientation d'Aménagement et de Programmation "Habitat" ou "Développement économique" au titre de l'article R151-6 du Code de l'Urbanisme
-39	PRESCRIPTION	02	00		PPRI de la Vallée de la Somme et ses affluents : Zone de type 4
-40	PRESCRIPTION	02	00		PPRI de la Vallée de la Somme et ses affluents : Zone de type 2
-41	PRESCRIPTION	05	07		Secteur concerné par un Périmètre d'Attente de Projet d'Aménagement Global au titre de l'article L151-41,5° du Code de l'Urbanisme
-42	PRESCRIPTION	05	00		Emplacement réservé au titre de l'article L151-41 du Code de l'Urbanisme
-43	PRESCRIPTION	02	00		PPRI de la Vallée de la Somme et ses affluents : Zone de type 3
-44	PRESCRIPTION	02	00		Secteur à protéger pour des raisons hydrauliques et/ou de protection de la ressource au titre de l'article R151-31 du Code de l'Urbanisme
-45	PRESCRIPTION	02	00		PPR inondation et ruissellement des cantons de Chaulnes et de Bray-sur-Somme : Zone de type 1
-46	PRESCRIPTION	02	00		PPRI de Mesnil-Martinsart : Zone de type 3
-47	PRESCRIPTION	16	00		Bâtiment pouvant faire l'objet d'un changement de destination au titre de l'article L151-11,2° du Code de l'Urbanisme
-48	PRESCRIPTION	02	00		PPRI de la Vallée de la Somme et ses affluents : Zone de type 1
-49	PRESCRIPTION	02	00		PPRI de Mesnil-Martinsart : Zone de type 2
-50	PRESCRIPTION	02	00		PPR inondation et ruissellement des cantons de Chaulnes et de Bray-sur-Somme : Zone de type 2
-51	INFORMATION	19	00		Périmètre de protection des captages immédiat
-52	INFORMATION	19	00		Périmètre de protection des captages rapproché
-53	INFORMATION	19	00		Périmètre de protection des captages éloigné
-54	INFORMATION	99	00		Secteurs de risques de retrait/gonflement d'argiles moyen à fort
-55	INFORMATION	99	00		Secteurs de nappes sub-affleurantes
+33	PRESCRIPTION	T	02	00	T	PPR inondation et ruissellement des cantons de Chaulnes et de Bray-sur-Somme : Zone de type 3
+34	PRESCRIPTION	T	07	00	T	Patrimoine naturel remarquable surfacique à protéger au titre de l'article L151-23 du Code de l'Urbanisme (boisement, parc ...)
+35	PRESCRIPTION	T	02	00	T	Secteur soumis à un risque d'inondation (hors PPRI) au titre de l'article R151-31 du Code de l'Urbanisme
+36	PRESCRIPTION	T	18	00	T	Secteur couvert par une Orientation d'Aménagement et de Programmation de densification au titre de l'article R151-6 du Code de l'Urbanisme
+37	PRESCRIPTION	T	02	00	T	PPRI de Mesnil-Martinsart : Zone de type 1
+38	PRESCRIPTION	T	02	00	T	Secteur couvert par une Orientation d'Aménagement et de Programmation "Habitat" ou "Développement économique" au titre de l'article R151-6 du Code de l'Urbanisme
+39	PRESCRIPTION	T	02	00	T	PPRI de la Vallée de la Somme et ses affluents : Zone de type 4
+40	PRESCRIPTION	T	02	00	T	PPRI de la Vallée de la Somme et ses affluents : Zone de type 2
+41	PRESCRIPTION	T	02	00	T	Secteur concerné par un Périmètre d'Attente de Projet d'Aménagement Global au titre de l'article L151-41,5° du Code de l'Urbanisme
+42	PRESCRIPTION	T	02	00	T	Emplacement réservé au titre de l'article L151-41 du Code de l'Urbanisme
+43	PRESCRIPTION	T	02	00	T	PPRI de la Vallée de la Somme et ses affluents : Zone de type 3
+44	PRESCRIPTION	T	02	00	T	Secteur à protéger pour des raisons hydrauliques et/ou de protection de la ressource au titre de l'article R151-31 du Code de l'Urbanisme
+45	PRESCRIPTION	T	02	00	T	PPR inondation et ruissellement des cantons de Chaulnes et de Bray-sur-Somme : Zone de type 1
+46	PRESCRIPTION	T	02	00	T	PPRI de Mesnil-Martinsart : Zone de type 3
+47	PRESCRIPTION	T	02	00	T	Bâtiment pouvant faire l'objet d'un changement de destination au titre de l'article L151-11,2° du Code de l'Urbanisme
+48	PRESCRIPTION	T	02	00	T	PPRI de la Vallée de la Somme et ses affluents : Zone de type 1
+49	PRESCRIPTION	T	02	00	T	PPRI de Mesnil-Martinsart : Zone de type 2
+50	PRESCRIPTION	T	02	00	T	PPR inondation et ruissellement des cantons de Chaulnes et de Bray-sur-Somme : Zone de type 2
+51	INFORMATION	T	02	00	T	Périmètre de protection des captages immédiat
+52	INFORMATION	T	02	00	T	Périmètre de protection des captages rapproché
+53	INFORMATION	T	02	00	T	Périmètre de protection des captages éloigné
+54	INFORMATION	T	02	00	T	Secteurs de risques de retrait/gonflement d'argiles moyen à fort
+55	INFORMATION	T	02	00	T	Secteurs de nappes sub-affleurantes
 \.
 
 
