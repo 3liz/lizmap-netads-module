@@ -58,6 +58,8 @@ php installer.php
    * URL de consultation des dossiers NetADS
    * L'identifiant du client NetADS par défaut n'est pas obligatoire, celui défini dans le projet lizmap est utilisé
 
+ * Pour que les liens vers la parcelle depuis NetADS fonctionnent correctement (ie, zoom sur la parcelle), il faut que la couche `parcelles` soit publiée en WFS
+
 ## Configuration du projet QGIS
 
 Pour que votre projet QGIS/Lizmap utilise les fonctionnalités du module, il faut :

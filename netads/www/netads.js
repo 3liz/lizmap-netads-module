@@ -7,21 +7,31 @@ lizMap.events.on({
 
         if (params && params.IDU) {
 
-            let parcelleIDU = params.IDU;
-            if (parcelleIDU.length < 12) {
-                console.log('Le paramètre IDU doit contenir 12 ou 15 caractères !');
+            let parcellesParam = params.IDU.split(',');
+            let parcelles = [];
+            for(let parcelleIDU of parcellesParam) {
+                let ok = true;
+                if (parcelleIDU.length < 12) {
+                    console.log('Le paramètre IDU doit contenir 12 ou 15 caractères !');
+                        ok = false;
+                }
+
+                if (parcelleIDU.length == 12) {
+                    parcelleIDU = netAdsConfig.prefixParcelle + parcelleIDU;
+                }
+
+                if (parcelleIDU.length != 15) {
+                    console.log('Le paramètre IDU doit contenir 12 ou 15 caractères !');
+                        ok = false;
+                    }
+                if (ok) {
+                    parcelles.push(parcelleIDU);
+                }
+            }
+            if (parcelles.length == 0) {
+                console.log('Le paramètre IDU ne contient aucun ID valide');
                 return;
             }
-
-            if (parcelleIDU.length == 12) {
-                parcelleIDU = netAdsConfig.prefixParcelle + parcelleIDU;
-            }
-
-            if (parcelleIDU.length != 15) {
-                console.log('Le paramètre IDU doit contenir 12 ou 15 caractères !');
-                return;
-            }
-
             // Construction de la requête de récupération de
             // l'emprise pour la/les parcelles en paramètre
             const sentFormData = new FormData();
@@ -34,7 +44,11 @@ lizMap.events.on({
             sentFormData.append('GEOMETRYNAME', 'extent');
 
             // Transformation du paramètre d'URL parcelles en EXP_FILTER
-            sentFormData.append('EXP_FILTER', `"ident" = '${parcelleIDU}'`);
+            let filter = '';
+            for(let parcelleIDU of parcelles) {
+                filter += `"ident" = '${parcelleIDU}' OR `;
+            };
+            sentFormData.append('EXP_FILTER', filter.substring(0, filter.length - 3));
 
             fetch(`${lizUrls.wms}?repository=${lizUrls.params.repository}&project=${lizUrls.params.project}`, {
                 body: sentFormData,
