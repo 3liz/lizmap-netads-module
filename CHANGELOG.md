@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 1.0.6 - 2025-12-18
+
+### Added
+
+* Permet l'utilisation de plusieurs id de parcelles dans l'URL, zoomera sur la première
+* Depuis Lizmap Web Client 3.9, il faut publier la couche parcelles en WFS pour récupérer les infos et y zoomer
+
 ## 1.0.5 - 2025-10-14
 
 ### Added
