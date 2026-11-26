@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Changed
+
+* Compatibilité avec Lizmap Web Client 3.10, 3.8 minimum
+* Tests : plugins QGIS Server installés depuis plugins.qgis.org et mis à jour
+
 ## 1.0.6 - 2025-12-18
 
 ### Added
