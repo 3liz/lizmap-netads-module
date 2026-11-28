@@ -22,7 +22,25 @@ class NetADSAPIClient {
         $this->viewURL = $iniFile->getValue('view_url');
     }
 
+    /**
+     * Get the netADS dossiers of a parcel from the netADS search API.
+     *
+     * @param string $commune Code of the commune (département, direction and commune)
+     * @param string $section Prefix and section of the parcel
+     * @param string $numero  Number of the parcel
+     *
+     * @return array The dossier XML elements
+     *
+     * @throws DomainException When the API is not configured, cannot be queried or returns an error
+     */
     public function getDossiers(string $commune, string $section, string $numero) {
+        // The search URL is mandatory: the module may not be configured yet
+        if (empty($this->searchURL)) {
+            \jLog::log('netADS API search URL is not configured', 'lizmapadmin');
+
+            throw new DomainException('netADS API not configured');
+        }
+
         $requestParam = array(
             'idclient' => $this->netADSclientID,
             'user_login' => $this->login,
@@ -43,7 +61,14 @@ class NetADSAPIClient {
             ),
         );
 
-        list($data, $mime, $code) = \Lizmap\Request\Proxy::getRemoteData($this->searchURL, $options);
+        // Network errors are raised as exceptions by the proxy
+        try {
+            list($data, $mime, $code) = \Lizmap\Request\Proxy::getRemoteData($this->searchURL, $options);
+        } catch (\Exception $e) {
+            \jLog::log('unable to query netADS API (' . $this->searchURL . ') '.$e->getMessage(), 'error');
+
+            throw new DomainException('netADS API call error');
+        }
 
         if (floor($code / 100) >= 4) {
             \jLog::log('unable to query netADS API (' . $this->searchURL . ') HTTP code '.$code, 'error');

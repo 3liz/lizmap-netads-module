@@ -7,6 +7,11 @@
 * Compatibilité avec Lizmap Web Client 3.10, 3.8 minimum
 * Tests : plugins QGIS Server installés depuis plugins.qgis.org et mis à jour
 
+### Fixed
+
+* Popup des dossiers : message d'erreur au lieu d'une erreur 500 quand l'API netADS n'est pas configurée ou injoignable
+* Administration : libellé de l'URL de consultation des dossiers
+
 ## 1.0.6 - 2025-12-18
 
 ### Added

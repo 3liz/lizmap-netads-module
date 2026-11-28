@@ -13,7 +13,7 @@
   </input>
 
   <input ref="view_url" type="url">
-    <label>URL de consultation de dossiers NetADS/label</label>
+    <label>URL de consultation de dossiers NetADS</label>
     <help>Permet la consultation d’un dossier dans « NetADS web » depuis un appel effectué sur la référence d’un dossier présent sur la fiche parcellaire du SIG</help>
   </input>
 
